@@ -1,5 +1,428 @@
-<html>
-    <body>
-        <h1>this is the first check</h1>
-    </body>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>horizon · modern static page</title>
+    <!-- clean system fonts, subtle smoothness -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8fafc;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.5;
+            color: #0f172a;
+            padding: 2rem 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* soft card container */
+        .main-wrapper {
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        /* header / navigation */
+        .top-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 1.25rem;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.7rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(145deg, #1e293b, #3b4b62);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.2rem;
+            font-weight: 450;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #334155;
+            transition: color 0.15s;
+            font-size: 1.05rem;
+        }
+
+        .nav-links a:hover {
+            color: #0f172a;
+            text-decoration: underline 2px #94a3b8;
+            text-underline-offset: 6px;
+        }
+
+        /* main intro */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            flex: 1 1 300px;
+        }
+
+        .badge {
+            background: #e9eef3;
+            color: #1e293b;
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1.3rem;
+            border: 1px solid #d1d9e6;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 650;
+            line-height: 1.2;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.2rem;
+            background: linear-gradient(135deg, #0a1a2f, #25435f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #334155;
+            max-width: 550px;
+            margin-bottom: 2rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: 1.5px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: #1e2b3c;
+            color: white;
+            box-shadow: 0 6px 14px rgba(20, 40, 60, 0.18);
+        }
+
+        .btn-primary:hover {
+            background: #0f1a28;
+            transform: scale(1.02);
+            box-shadow: 0 10px 18px rgba(0, 20, 40, 0.2);
+        }
+
+        .btn-outline {
+            border-color: #b9c7da;
+            color: #1e2b3c;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: #ffffffd0;
+            border-color: #7f98b3;
+        }
+
+        .hero-image {
+            flex: 1 1 260px;
+            background: linear-gradient(145deg, #cbd5e1, #dde3ec);
+            border-radius: 42% 58% 70% 30% / 44% 36% 64% 56%;
+            min-height: 230px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #334155;
+            font-size: 1.5rem;
+            font-weight: 300;
+            box-shadow: 0 25px 30px -15px rgba(0,0,0,0.2);
+            border: 2px solid #ffffff70;
+            backdrop-filter: blur(2px);
+        }
+
+        .hero-image span {
+            background: #ffffffb0;
+            padding: 0.5rem 1.8rem;
+            border-radius: 100px;
+            font-weight: 450;
+            color: #1f3449;
+        }
+
+        /* card grid — 3 items */
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 2.8rem 0 1.8rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 620;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header a {
+            color: #3d5a78;
+            text-decoration: none;
+            font-weight: 470;
+            border-bottom: 1.5px dotted #a2bbd1;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .card {
+            background: #ffffffdd;
+            backdrop-filter: blur(2px);
+            border-radius: 2rem 1rem 2rem 1rem;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 15px 25px -15px #b2c4d6, 0 2px 6px #e2e8f0 inset;
+            border: 1px solid #ffffff;
+            transition: transform 0.25s ease, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 28px 30px -18px #809ab3;
+            background: white;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.3rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: #364754;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-link {
+            text-decoration: none;
+            font-weight: 500;
+            color: #1f3a5f;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .card-link:hover {
+            border-bottom-color: #1f3a5f;
+        }
+
+        /* mid page highlight */
+        .quote-strip {
+            background: #d4e0ed70;
+            border-radius: 50px 8px 50px 8px;
+            padding: 2rem 2.2rem;
+            margin: 3rem 0 3rem;
+            border-left: 8px solid #1e2f40;
+            font-style: italic;
+            font-size: 1.4rem;
+            color: #0e2236;
+            font-weight: 400;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 6px 18px #bbcfe0;
+        }
+
+        .quote-strip span {
+            font-style: normal;
+            font-weight: 550;
+            background: #1e2f40;
+            color: white;
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            margin-left: 1rem;
+            letter-spacing: 0.3px;
+        }
+
+        /* footer */
+        .footer {
+            margin-top: 3rem;
+            border-top: 1px solid #d3deed;
+            padding-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            color: #2f4562;
+        }
+
+        .footer small {
+            font-size: 0.95rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.8rem;
+        }
+
+        .social-links a {
+            text-decoration: none;
+            color: #2a405b;
+            font-weight: 480;
+            border-bottom: 1px dotted #afc3db;
+        }
+
+        .social-links a:hover {
+            color: #0b1b30;
+        }
+
+        /* small touch responsiveness */
+        @media (max-width: 550px) {
+            body { padding: 1.5rem 1rem; }
+            .hero h1 { font-size: 2.4rem; }
+            .top-bar { flex-direction: column; gap: 0.9rem; align-items: start; }
+            .nav-links { gap: 1.3rem; flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- header with logo + navigation -->
+        <header class="top-bar">
+            <div class="logo">✦ horizon</div>
+            <nav class="nav-links">
+                <a href="#">home</a>
+                <a href="#">journal</a>
+                <a href="#">projects</a>
+                <a href="#">lab</a>
+                <a href="#">contact</a>
+            </nav>
+        </header>
+
+        <!-- main hero / intro section -->
+        <div class="hero">
+            <div class="hero-text">
+                <span class="badge">●  static  ●  html  ●  css grid  ●</span>
+                <h1>crafted with only HTML & CSS</h1>
+                <p>Clean, responsive, and made from scratch. No frameworks, no javascript — just semantic structure and modern styling.</p>
+                <div class="button-group">
+                    <a href="#" class="btn btn-primary">explore</a>
+                    <a href="#" class="btn btn-outline">source →</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <span>✦ pure interface</span>
+            </div>
+        </div>
+
+        <!-- section header + cards grid -->
+        <div class="section-header">
+            <h2>recent explorations</h2>
+            <a href="#">view all &nbsp;↗</a>
+        </div>
+
+        <div class="card-grid">
+            <!-- card 1 -->
+            <article class="card">
+                <div class="card-icon">🌊</div>
+                <h3>fluid space</h3>
+                <p>Layers of depth using border‑radius, pastel shadows and soft gradients.</p>
+                <a href="#" class="card-link">browse →</a>
+            </article>
+            <!-- card 2 -->
+            <article class="card">
+                <div class="card-icon">◈</div>
+                <h3>crystalline</h3>
+                <p>Cards with subtle glassmorphism, backdrop blur and light inset borders.</p>
+                <a href="#" class="card-link">discover →</a>
+            </article>
+            <!-- card 3 -->
+            <article class="card">
+                <div class="card-icon">⍟</div>
+                <h3>anchor grid</h3>
+                <p>Responsive auto‑fit columns. Each card lifts gently on hover.</p>
+                <a href="#" class="card-link">explore →</a>
+            </article>
+        </div>
+
+        <!-- a small accent quote / banner -->
+        <div class="quote-strip">
+            “Simplicity is the ultimate sophistication — this file is 100% self-contained.”
+            <span>one .html</span>
+        </div>
+
+        <!-- additional content: list & small feature (still no js) -->
+        <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin: 2rem 0 2.5rem;">
+            <div style="background: #f1f6fd; border-radius: 30px; padding: 1.5rem 2rem; flex: 1 1 200px;">
+                <h3 style="font-weight: 560; margin-bottom: 0.8rem;">📌 built with</h3>
+                <ul style="list-style-type: none; color: #23415c;">
+                    <li>✓ semantic HTML5</li>
+                    <li>✓ CSS grid + flex</li>
+                    <li>✓ system fonts</li>
+                    <li>✓ no external deps</li>
+                </ul>
+            </div>
+            <div style="background: #e9f0fa; border-radius: 30px; padding: 1.5rem 2rem; flex: 1 1 200px;">
+                <h3 style="font-weight: 560; margin-bottom: 0.8rem;">🕊️ principles</h3>
+                <ul style="list-style-type: none; color: #23415c;">
+                    <li>✓ lightweight</li>
+                    <li>✓ responsive</li>
+                    <li>✓ accessible contrast</li>
+                    <li>✓ future‑friendly</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- footer with simple social / links -->
+        <footer class="footer">
+            <small>✦ horizon &nbsp;·&nbsp; 2026 — static showcase</small>
+            <div class="social-links">
+                <a href="#">github</a>
+                <a href="#">rss</a>
+                <a href="#">mail</a>
+            </div>
+        </footer>
+    </div>
+    <!-- no script tag — pure html/css -->
+</body>
 </html>
+
